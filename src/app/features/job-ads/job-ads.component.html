@@ -1,0 +1,125 @@
+<div class="job-ads-container">
+  <div class="header-jobs-ads" fxHide fxShow.gt-xs="true" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+    <div class="search-icon-container">
+      <input type="text" class="product-search" placeholder="Search product" (input)="globalSearch($event)">
+      <button class="navbar-search-button">
+        <mat-icon >search</mat-icon>
+      </button>
+    </div>
+    <div>
+      <button mat-raised-button 
+        color="primary"
+        (click)="openDialog($event)">
+        Create new Job Ad
+      </button>
+    </div>
+  </div>
+
+  <div class="header-jobs-ads" fxLayout="column" fxHide.gt-xs="true" fxLayoutAlign="start center" fxLayoutGap="16px">
+    <div class="search-icon-container">
+      <input type="text" class="product-search" placeholder="Search product" (input)="globalSearch($event)">
+      <button class="navbar-search-button">
+        <mat-icon >search</mat-icon>
+      </button>
+    </div>
+    <div>
+      <button mat-raised-button 
+        color="primary"
+        (click)="openDialog($event)">
+        Create new Job Ad
+      </button>
+    </div>
+  </div>
+  
+  <ng-container *ngIf="!showLoader; else loader">
+    <div class="table-container">
+      <table class="mat-elevation-z8" mat-table class="mat-table-responsive"
+          multiTemplateDataRows 
+          [dataSource]="dataSource">
+        <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+          <th mat-header-cell *matHeaderCellDef class="text-capitalize"> {{column}} </th>
+          <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+        </ng-container>
+        <ng-container matColumnDef="expand">
+          <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button aria-label="expand row" 
+              (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation(); expandColapse();">
+              <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="button">
+          <th mat-header-cell *matHeaderCellDef aria-label="row actions">Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+              <button color="primary" mat-icon-button (click)="editJobAd($event, element)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button color="accent" mat-icon-button (click)="removeJobAd($event, element)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+          
+        </ng-container>
+  
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element;" [attr.colspan]="columnsToDisplayWithExpand.length">
+            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <ng-container *ngIf="element.invoices.length > 0; else addInvoice">
+                <ng-container *ngFor="let invoice of element.invoices">
+                  <div class="title-invoice">
+                    <h4>Invoice: </h4>
+                  </div>
+                  <div class="margin-left-24" fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="4px">
+                    <mat-label>Due date of an invoice: {{ invoice.dueDate | date }}</mat-label>
+                    <mat-label>Amount: {{ invoice.amount }}</mat-label>
+                  </div>
+                </ng-container>
+              </ng-container>
+              <ng-template #addInvoice>
+                <div class="title-invoice">
+                  <h4>Invoice: </h4>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+                  <div><mat-label>Amount: </mat-label></div>
+                  <input class="product-search" [(ngModel)]="this.amount" (input)="checkValue()" placeholder="Amount of invoice"/>
+                  <button color="primary" mat-raised-button 
+                    (click)="addNewInvoice($event, element)"
+                    [disabled]="disableAmountButton">
+                    Add new
+                  </button>
+                </div>
+              </ng-template>
+              
+            </div>
+          </td>
+        </ng-container>
+  
+        <tr matTooltip="If you want to add or see info about invoice, please expand row" 
+          mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand; sticky: true" ></tr>
+        <tr matTooltip="If you want to add or see info about invoice, please expand row" 
+          mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;"
+            class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : element">
+        </tr>
+        <tr
+          mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  
+      </table>
+    </div>
+  </ng-container>
+  <ng-template #loader>
+    <div class="progres-spinner-container">
+      <mat-progress-spinner 
+        class="example-margin"
+        [mode]="mode"
+        [value]="value">
+      </mat-progress-spinner>
+    </div>
+  </ng-template>
+</div>
+

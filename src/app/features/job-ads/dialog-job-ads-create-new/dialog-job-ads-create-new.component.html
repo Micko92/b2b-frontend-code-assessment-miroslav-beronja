@@ -1,0 +1,75 @@
+<div class="dialog-container">
+  <h1 mat-dialog-title>Create Job Ad</h1>
+  <div mat-dialog-content>
+    <form [formGroup]="createNewJobAdsForm">
+      <div fxLayout="column" fxLayoutAlign="center start">
+        <div class="width-100">
+          <mat-form-field class="width-100">
+            <mat-label>Title</mat-label>
+            <input matInput type="text" formControlName="title">
+            <button  matSuffix mat-icon-button aria-label="Clear">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div class="width-100">
+          <mat-form-field class="width-100">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" placeholder="Description..."></textarea>
+          </mat-form-field>
+        </div>
+        <div class="width-100">
+          <mat-form-field class="width-100">
+            <mat-label>Skills</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Fruit selection" formControlName="skills">
+              <mat-chip-row *ngFor="let skill of skillsArray; let i = index" (removed)="removeSkill(skill, i)">
+                {{ skill }}
+                <button matChipRemove [attr.aria-label]="'remove ' + skill">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            </mat-chip-grid>
+            <input placeholder="New keyword..."
+              formContorlName="skills"
+              [matChipInputFor]="chipGrid"
+              (matChipInputTokenEnd)="addSkill($event)"/>
+            </mat-form-field>
+        </div>
+        <div class="status">
+          <mat-label>Status</mat-label>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" class="width-100">
+          <div>
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="status.value" (change)="changeStatus($event)">
+              <mat-button-toggle 
+                value="{{ jobAdStatus.DRAFT }}"
+                [disabled]="status.value === jobAdStatus.PUBLISHED || status.value === jobAdStatus.ARCHIVED">
+                {{ jobAdStatus.DRAFT }}
+              </mat-button-toggle>
+              <mat-button-toggle
+                value="{{ jobAdStatus.PUBLISHED }}"
+                [disabled]="status.value === jobAdStatus.ARCHIVED || typeOfEvent === 'create'">
+                {{ jobAdStatus.PUBLISHED }}
+              </mat-button-toggle>
+              <mat-button-toggle value="{{ jobAdStatus.ARCHIVED }}" 
+                [disabled]="status.value === jobAdStatus.DRAFT">
+                {{ jobAdStatus.ARCHIVED }}
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+          
+        </div>
+      </div>
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button
+      mat-dialog-close
+      color="primary" 
+      [disabled]="createNewJobAdsForm.invalid"
+      (click)="saveData()">
+      Save
+    </button>
+    <button mat-button mat-dialog-close>Close</button>
+  </div>
+</div>

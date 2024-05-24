@@ -1,0 +1,137 @@
+.job-ads-container {
+  padding: 16px;
+}
+
+.table-container {
+  height: calc(100vh - 180px);
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow-y: hidden;
+  // // display: flex;
+  height: 100px;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+.header-jobs-ads {
+  margin-bottom: 16px;
+}
+
+.search-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: fit-content;
+  position: relative;
+}
+
+.search-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 5px 10px;
+  background-color: var(--white-color);
+}
+
+.search-input-container input {
+  border: none;
+  outline: none;
+  padding: 0;
+  color: #333;
+}
+
+.search-input-container.active {
+  width: auto;
+}
+
+.product-search {
+  border: 1px solid var(--light-shade-gray);
+  padding: 8px;
+  transition: border-color 0.3s; /* Adding a transition for a smooth change */
+  outline: none;
+  border-radius: 4px;
+  min-width: 200px;
+  width: 250px;
+  font-size: 15px;
+}
+
+.navbar-search-button {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  position: absolute;
+  background-color: var(--primary-color);
+  color: white;
+  height: 100%;
+  border-radius: 0px 4px 4px 0px;
+  width: 38px;
+}
+
+.progres-spinner-container {
+  display: inline-block;
+  position: absolute;
+  top: calc(50% - 50px);
+  left: calc(50% - 50px);
+}
+
+.example-margin {
+  animation: rotation 1s linear infinite;
+
+  @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+  } 
+}
+
+.title-invoice {
+  margin-left: 16px;
+}
